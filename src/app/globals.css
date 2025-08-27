@@ -1,26 +1,77 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
+  /* Neural Network / Brain Theme Colors */
+  --background: #0a0b14;
+  --surface: #1a1b26;
+  --surface-alt: #24283b;
+  --foreground: #c0caf5;
+  --primary: #7aa2f7;
+  --secondary: #bb9af7;
+  --accent: #9ece6a;
+  --neural: #f7768e;
+  --wave: #73daca;
+  --glow: #e0af68;
+  
+  /* Gradient overlays */
+  --gradient-primary: linear-gradient(135deg, #7aa2f7 0%, #bb9af7 100%);
+  --gradient-neural: linear-gradient(135deg, #f7768e 0%, #e0af68 100%);
+  --gradient-wave: linear-gradient(135deg, #73daca 0%, #9ece6a 100%);
+  
+  /* Tailwind custom properties */
   --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-alt: var(--surface-alt);
   --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-neural: var(--neural);
+  --color-wave: var(--wave);
+  --color-glow: var(--glow);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary);
+}
+
+/* Smooth animations */
+* {
+  scroll-behavior: smooth;
+}
+
+/* Neural network background pattern */
+.neural-bg {
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(122, 162, 247, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(187, 154, 247, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(115, 218, 202, 0.03) 0%, transparent 50%);
+}
+
+/* Custom gradient utilities */
+.bg-gradient-radial {
+  background-image: radial-gradient(circle, var(--tw-gradient-stops));
 }
