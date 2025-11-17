@@ -25,7 +25,7 @@ export default function Home() {
         {/* Personal Mode Section */}
         <PersonalModeSelector 
           currentGoal={null}
-          onGoalSelect={(goal) => {
+          onGoalSelect={() => {
             document.getElementById('music-player')?.scrollIntoView({ behavior: 'smooth' });
           }} 
         />

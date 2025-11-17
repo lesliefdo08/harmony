@@ -7,7 +7,7 @@ interface AIAssistantProps {
   onRecommendation?: (trackIndex: number) => void;
 }
 
-const AIAssistant = ({ onRecommendation }: AIAssistantProps) => {
+const AIAssistant = ({}: AIAssistantProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Array<{id: string; role: string; content: string; createdAt: Date}>>([
     {

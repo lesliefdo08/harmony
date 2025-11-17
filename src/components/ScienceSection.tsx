@@ -105,7 +105,7 @@ const ScienceSection = () => {
             </span>
           </h2>
           <p className="text-xl text-[var(--foreground)]/80 max-w-3xl mx-auto">
-            Binaural beats use the brain's natural frequency-following response to influence mental states through precise audio frequencies.
+            Binaural beats use the brain&apos;s natural frequency-following response to influence mental states through precise audio frequencies.
           </p>
         </motion.div>
 
@@ -128,7 +128,7 @@ const ScienceSection = () => {
 
               </div>
               <h4 className="text-xl font-semibold text-[var(--foreground)] mb-2">Step 2: Brain Processing</h4>
-              <p className="text-[var(--foreground)]/70">Your brain perceives the difference as a third "phantom" tone</p>
+              <p className="text-[var(--foreground)]/70">Your brain perceives the difference as a third &quot;phantom&quot; tone</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-gradient-to-r from-[var(--neural)] to-[var(--glow)] rounded-full flex items-center justify-center mx-auto mb-4">
@@ -144,7 +144,7 @@ const ScienceSection = () => {
         <motion.div className="mb-20" variants={itemVariants}>
           <h3 className="text-3xl font-bold text-[var(--foreground)] mb-8 text-center">Brain Wave Frequencies</h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {brainwaveTypes.map((wave, index) => (
+            {brainwaveTypes.map((wave) => (
               <motion.div
                 key={wave.name}
                 className="bg-gradient-to-br from-[var(--surface)]/60 to-[var(--surface-alt)]/40 backdrop-blur-xl rounded-2xl p-6 border border-[var(--primary)]/20 hover:border-[var(--primary)]/40 transition-all"
@@ -176,7 +176,7 @@ const ScienceSection = () => {
         <motion.div variants={itemVariants}>
           <h3 className="text-3xl font-bold text-[var(--foreground)] mb-8 text-center">Research-Backed Results</h3>
           <div className="grid md:grid-cols-3 gap-8">
-            {research.map((item, index) => (
+            {research.map((item) => (
               <motion.div
                 key={item.title}
                 className="bg-gradient-to-br from-[var(--surface)]/60 to-[var(--surface-alt)]/40 backdrop-blur-xl rounded-2xl p-8 border border-[var(--primary)]/20 text-center"

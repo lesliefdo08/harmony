@@ -12,16 +12,16 @@ interface AudioVisualizerProps {
   onModeChange?: (mode: 'bars' | 'waveform' | 'circular') => void;
 }
 
-const AudioVisualizer = ({ audioEngine, isPlaying, category, mode = 'bars', onModeChange }: AudioVisualizerProps) => {
+const categoryColors = {
+  focus: { primary: '#7aa2f7', secondary: '#bb9af7', glow: 'rgba(122, 162, 247, 0.5)' },
+  relaxation: { primary: '#73daca', secondary: '#9ece6a', glow: 'rgba(115, 218, 202, 0.5)' },
+  creativity: { primary: '#f7768e', secondary: '#e0af68', glow: 'rgba(247, 118, 142, 0.5)' },
+  sleep: { primary: '#bb9af7', secondary: '#7aa2f7', glow: 'rgba(187, 154, 247, 0.5)' }
+};
+
+const AudioVisualizer = ({ audioEngine, isPlaying, category, mode = 'bars' }: AudioVisualizerProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number | undefined>(undefined);
-
-  const categoryColors = {
-    focus: { primary: '#7aa2f7', secondary: '#bb9af7', glow: 'rgba(122, 162, 247, 0.5)' },
-    relaxation: { primary: '#73daca', secondary: '#9ece6a', glow: 'rgba(115, 218, 202, 0.5)' },
-    creativity: { primary: '#f7768e', secondary: '#e0af68', glow: 'rgba(247, 118, 142, 0.5)' },
-    sleep: { primary: '#bb9af7', secondary: '#7aa2f7', glow: 'rgba(187, 154, 247, 0.5)' }
-  };
 
   useEffect(() => {
     const canvas = canvasRef.current;

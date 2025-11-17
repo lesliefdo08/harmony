@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { getAudioEngine, FrequencyPresets } from '@/utils/audioEngine';
 import { 
   getUserPreferences, 
@@ -36,7 +36,7 @@ const MusicPlayer = () => {
   const progressRef = useRef<HTMLDivElement>(null);
   const audioEngineRef = useRef(getAudioEngine());
 
-  const tracks: Track[] = [
+  const tracks: Track[] = useMemo(() => [
     {
       id: 1,
       title: "Deep Focus Alpha",
@@ -77,7 +77,7 @@ const MusicPlayer = () => {
       baseFrequency: FrequencyPresets.DELTA.baseFrequency,
       beatFrequency: FrequencyPresets.DELTA.beatFrequency
     }
-  ];
+  ], []);
 
   // Load preferences on mount
   useEffect(() => {
@@ -98,9 +98,10 @@ const MusicPlayer = () => {
 
   // Cleanup on unmount
   useEffect(() => {
+    const audioEngine = audioEngineRef.current;
     return () => {
-      if (audioEngineRef.current) {
-        audioEngineRef.current.stop();
+      if (audioEngine) {
+        audioEngine.stop();
       }
     };
   }, []);
@@ -112,27 +113,7 @@ const MusicPlayer = () => {
     sleep: 'from-[var(--secondary)] to-[var(--primary)]'
   };
 
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (isPlaying) {
-      const trackDuration = parseTimeString(tracks[currentTrack].duration);
-      const incrementPerSecond = 100 / trackDuration;
-      
-      interval = setInterval(() => {
-        setProgress(prev => {
-          const newProgress = prev + incrementPerSecond;
-          if (newProgress >= 100) {
-            handleTrackComplete();
-            return 0;
-          }
-          return newProgress;
-        });
-      }, 1000);
-    }
-    return () => clearInterval(interval);
-  }, [isPlaying, currentTrack]);
-
-  const handleTrackComplete = async () => {
+  const handleTrackComplete = useCallback(async () => {
     // Track the completed session
     if (sessionStartTime) {
       const duration = Math.floor((Date.now() - sessionStartTime) / 1000);
@@ -159,7 +140,27 @@ const MusicPlayer = () => {
       setIsPlaying(false);
       setSessionStartTime(null);
     }
-  };
+  }, [sessionStartTime, tracks, currentTrack, loopEnabled]);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isPlaying) {
+      const trackDuration = parseTimeString(tracks[currentTrack].duration);
+      const incrementPerSecond = 100 / trackDuration;
+      
+      interval = setInterval(() => {
+        setProgress(prev => {
+          const newProgress = prev + incrementPerSecond;
+          if (newProgress >= 100) {
+            handleTrackComplete();
+            return 0;
+          }
+          return newProgress;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isPlaying, currentTrack, tracks, handleTrackComplete]);
 
   const togglePlay = async () => {
     const audioEngine = audioEngineRef.current;

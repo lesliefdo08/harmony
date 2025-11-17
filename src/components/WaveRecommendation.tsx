@@ -5,10 +5,19 @@ interface WaveRecommendationProps {
   onRecommendation?: (trackId: number) => void;
 }
 
+interface Recommendation {
+  trackId: number;
+  title: string;
+  frequency: string;
+  duration: string;
+  reason: string;
+  tips: string[];
+}
+
 const WaveRecommendation = memo(({ onRecommendation }: WaveRecommendationProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
-  const [recommendation, setRecommendation] = useState<any | null>(null);
+  const [recommendation, setRecommendation] = useState<Recommendation | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const moods = [
@@ -69,7 +78,7 @@ const WaveRecommendation = memo(({ onRecommendation }: WaveRecommendationProps) 
     }
   ];
 
-  const recommendations: Record<string, any> = {
+  const recommendations: Record<string, Recommendation> = {
     focus: {
       trackId: 1,
       title: 'Deep Focus Alpha',
@@ -200,7 +209,7 @@ const WaveRecommendation = memo(({ onRecommendation }: WaveRecommendationProps) 
                     </svg>
                   </motion.button>
                 </div>
-                <p className="text-gray-400 text-sm mt-2">Tell us what you need, and we'll recommend the perfect brainwave frequency</p>
+                <p className="text-gray-400 text-sm mt-2">Tell us what you need, and we&apos;ll recommend the perfect brainwave frequency</p>
               </div>
 
               {/* Content */}

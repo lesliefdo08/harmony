@@ -18,7 +18,7 @@ export class AudioEngine {
   private masterGain: GainNode | null = null;
   private merger: ChannelMergerNode | null = null;
   private analyser: AnalyserNode | null = null;
-  private frequencyDataArray: Uint8Array = new Uint8Array(0);
+  private frequencyDataArray: Uint8Array<ArrayBuffer> = new Uint8Array(0);
   private isInitialized: boolean = false;
   private isPlaying: boolean = false;
   
@@ -34,7 +34,7 @@ export class AudioEngine {
 
   private initAudioContext() {
     try {
-      this.audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      this.audioContext = new (window.AudioContext || (window as typeof window & { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
       this.isInitialized = true;
     } catch (error) {
       console.error('Web Audio API is not supported in this browser', error);

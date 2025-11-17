@@ -88,7 +88,15 @@ const AnalyticsDashboard = memo(() => {
     };
   }, [sessions, timeRange]);
 
-  const StatCard = ({ title, value, subtitle, icon, color }: any) => (
+  interface StatCardProps {
+    title: string;
+    value: string | number;
+    subtitle: string;
+    icon: React.ReactNode;
+    color: string;
+  }
+
+  const StatCard = ({ title, value, subtitle, icon, color }: StatCardProps) => (
     <motion.div
       className="relative bg-gradient-to-br from-[#1a1f35]/80 to-[#0a0e1a]/80 backdrop-blur-xl rounded-xl p-6 border border-[#5b9eff]/20 overflow-hidden group hover:border-[#5b9eff]/40 transition-all"
       whileHover={{ scale: 1.02, y: -4 }}

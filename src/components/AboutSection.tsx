@@ -116,7 +116,7 @@ const AboutSection = () => {
         <motion.div className="mb-20" variants={itemVariants}>
           <h3 className="text-3xl font-bold text-[var(--foreground)] mb-10 text-center">What Makes Us Different</h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
+            {features.map((feature) => (
               <motion.div
                 key={feature.title}
                 className="bg-gradient-to-br from-[var(--surface)]/60 to-[var(--surface-alt)]/40 backdrop-blur-xl rounded-2xl p-6 border border-[var(--primary)]/20 hover:border-[var(--primary)]/40 transition-all"
@@ -135,7 +135,7 @@ const AboutSection = () => {
         <motion.div className="mb-20" variants={itemVariants}>
           <h3 className="text-3xl font-bold text-[var(--foreground)] mb-10 text-center">Built With Excellence</h3>
           <div className="grid md:grid-cols-3 gap-6">
-            {team.map((area, index) => (
+            {team.map((area) => (
               <motion.div
                 key={area.name}
                 className="bg-gradient-to-br from-[var(--surface)]/60 to-[var(--surface-alt)]/40 backdrop-blur-xl rounded-2xl p-8 border border-[var(--primary)]/20 text-center"
