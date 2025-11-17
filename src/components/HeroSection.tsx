@@ -210,7 +210,7 @@ const HeroSection = () => {
       <motion.div
         className="relative z-10 text-center max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"
         variants={containerVariants}
-        initial="hidden"
+        initial="visible"
         animate="visible"
       >
         {/* Subtitle */}
@@ -218,31 +218,30 @@ const HeroSection = () => {
           className="mb-6"
           variants={itemVariants}
         >
-          <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-gradient-to-r from-[var(--primary)]/20 to-[var(--secondary)]/20 border border-[var(--primary)]/30 text-[var(--primary)]">
-            <div className="w-2 h-2 bg-[var(--wave)] rounded-full mr-2 animate-pulse"></div>
-            Advanced Brain Wave Technology
+          <span className="inline-block px-4 py-1.5 rounded-md text-sm bg-[#1a1f35]/80 border border-[#5b9eff]/20 text-gray-400">
+            Web Audio API • Real-time Generation
           </span>
         </motion.div>
 
         {/* Main Heading */}
         <motion.h1
-          className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight"
+          className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
           variants={itemVariants}
         >
-          <span className="block bg-gradient-to-r from-[var(--primary)] via-[var(--secondary)] to-[var(--wave)] bg-clip-text text-transparent">
-            Harmonics
+          <span className="block bg-gradient-to-r from-[#5b9eff] to-[#a78bfa] bg-clip-text text-transparent">
+            Harmony
           </span>
-          <span className="block text-3xl md:text-4xl lg:text-5xl mt-2 text-[var(--foreground)]">
-            Brain Wave Music
+          <span className="block text-2xl md:text-3xl lg:text-4xl mt-3 text-gray-300 font-normal">
+            Binaural Beats for Focus & Relaxation
           </span>
         </motion.h1>
 
         {/* Description */}
         <motion.p
-          className="text-xl md:text-2xl text-[var(--foreground)]/80 mb-8 max-w-2xl mx-auto leading-relaxed"
+          className="text-lg md:text-xl text-gray-400 mb-8 max-w-2xl mx-auto leading-relaxed"
           variants={itemVariants}
         >
-          Experience scientifically-designed frequencies that synchronize with your brain waves to enhance focus, creativity, and deep relaxation.
+          Scientifically-designed audio frequencies that help you focus better, think clearly, and relax deeply. No ads, no tracking, just pure sound.
         </motion.p>
 
         {/* CTA Buttons */}
@@ -251,65 +250,25 @@ const HeroSection = () => {
           variants={itemVariants}
         >
           <motion.button
-            className="px-8 py-4 bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white rounded-full font-semibold text-lg hover:shadow-xl hover:shadow-[var(--primary)]/25 transition-all duration-300 min-w-[200px]"
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
+            className="px-8 py-4 bg-gradient-to-r from-[#5b9eff] to-[#7c3aed] text-white rounded-lg font-semibold text-base shadow-lg hover:shadow-xl transition-all duration-200 min-w-[180px]"
+            whileHover={{ scale: 1.03, y: -2 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => {
+              document.getElementById('music-player')?.scrollIntoView({ behavior: 'smooth' });
+            }}
           >
-            Start Your Journey
+            Get Started
           </motion.button>
           <motion.button
-            className="px-8 py-4 border-2 border-[var(--primary)] text-[var(--primary)] rounded-full font-semibold text-lg hover:bg-[var(--primary)] hover:text-white transition-all duration-300 min-w-[200px]"
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
+            className="px-8 py-4 border border-[#5b9eff]/50 text-white rounded-lg font-semibold text-base hover:bg-[#5b9eff]/10 transition-all duration-200 min-w-[180px]"
+            whileHover={{ scale: 1.03, y: -2 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => {
+              document.getElementById('science')?.scrollIntoView({ behavior: 'smooth' });
+            }}
           >
             Learn More
           </motion.button>
-        </motion.div>
-
-        {/* Stats */}
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-2xl mx-auto"
-          variants={itemVariants}
-        >
-          {[
-            { number: '50K+', label: 'Active Users' },
-            { number: '98%', label: 'Success Rate' },
-            { number: '24/7', label: 'Available' }
-          ].map((stat, index) => (
-            <motion.div
-              key={index}
-              className="text-center"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: 'spring', stiffness: 300 }}
-            >
-              <div className="text-3xl font-bold bg-gradient-to-r from-[var(--wave)] to-[var(--accent)] bg-clip-text text-transparent">
-                {stat.number}
-              </div>
-              <div className="text-[var(--foreground)]/60 text-sm uppercase tracking-wider">
-                {stat.label}
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </motion.div>
-
-      {/* Scroll Indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 1.5 }}
-      >
-        <motion.div
-          className="w-6 h-10 border-2 border-[var(--primary)] rounded-full flex justify-center"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-        >
-          <motion.div
-            className="w-1 h-3 bg-[var(--primary)] rounded-full mt-2"
-            animate={{ scaleY: [1, 0.5, 1] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-          />
         </motion.div>
       </motion.div>
     </section>
