@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useRef } from 'react';
 import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
 import MusicPlayer from '@/components/MusicPlayer';
@@ -16,6 +17,17 @@ import WaveRecommendation from '@/components/WaveRecommendation';
 import ScrollToTop from '@/components/ScrollToTop';
 
 export default function Home() {
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const [currentTrackName, setCurrentTrackName] = useState('');
+  const musicPlayerRef = useRef<{ stopPlayback: () => void } | null>(null);
+
+  const handleTimerComplete = () => {
+    // Stop music when timer completes
+    if (musicPlayerRef.current) {
+      musicPlayerRef.current.stopPlayback();
+    }
+  };
+
   return (
     <div className="min-h-screen">
       {/* Skip to main content */}
@@ -56,12 +68,17 @@ export default function Home() {
             {/* Player and Timer Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6 items-start">
               <div className="w-full">
-                <MusicPlayer />
+                <MusicPlayer 
+                  ref={musicPlayerRef}
+                  onPlayStateChange={setIsAudioPlaying}
+                  onTrackChange={setCurrentTrackName}
+                />
               </div>
               <div className="w-full">
                 <FocusTimer 
-                  onTimerStart={() => {}}
-                  onTimerComplete={() => {}}
+                  isAudioPlaying={isAudioPlaying}
+                  currentTrackName={currentTrackName}
+                  onTimerComplete={handleTimerComplete}
                 />
               </div>
             </div>

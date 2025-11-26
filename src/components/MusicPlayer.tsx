@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo, forwardRef, useImperativeHandle } from 'react';
 import { Share2 } from 'lucide-react';
 import { getAudioEngine, FrequencyPresets } from '@/utils/audioEngine';
 import { 
@@ -27,7 +27,19 @@ interface Track {
   beatFrequency: number;
 }
 
-const MusicPlayer = () => {
+interface MusicPlayerProps {
+  onPlayStateChange?: (isPlaying: boolean) => void;
+  onTrackChange?: (trackName: string) => void;
+}
+
+export interface MusicPlayerRef {
+  stopPlayback: () => void;
+}
+
+const MusicPlayer = forwardRef<MusicPlayerRef, MusicPlayerProps>(({ 
+  onPlayStateChange, 
+  onTrackChange 
+}, ref) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrack, setCurrentTrack] = useState(0);
   const [progress, setProgress] = useState(0);
@@ -40,6 +52,17 @@ const MusicPlayer = () => {
   const [audioError, setAudioError] = useState<string | null>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const audioEngineRef = useRef(getAudioEngine());
+
+  // Expose stop method to parent via ref
+  useImperativeHandle(ref, () => ({
+    stopPlayback: () => {
+      if (audioEngineRef.current) {
+        audioEngineRef.current.stop();
+      }
+      setIsPlaying(false);
+      setSessionStartTime(null);
+    }
+  }));
 
   const tracks: Track[] = useMemo(() => [
     {
@@ -235,6 +258,7 @@ const MusicPlayer = () => {
       
       setIsPlaying(false);
       setSessionStartTime(null);
+      onPlayStateChange?.(false);
     } else {
       // Start playing
       try {
@@ -247,6 +271,8 @@ const MusicPlayer = () => {
         
         setIsPlaying(true);
         setSessionStartTime(Date.now());
+        onPlayStateChange?.(true);
+        onTrackChange?.(track.title);
       } catch (error) {
         console.error('Error starting audio:', error);
         setAudioError('Unable to start audio. Please check that your browser allows audio playback and try again.');
@@ -692,6 +718,8 @@ const MusicPlayer = () => {
         <ShareCard isOpen={showShareCard} onClose={() => setShowShareCard(false)} />
     </>
   );
-};
+});
+
+MusicPlayer.displayName = 'MusicPlayer';
 
 export default MusicPlayer;

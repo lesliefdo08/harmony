@@ -2,8 +2,11 @@
 
 import { motion } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
+import { trackSession } from '@/utils/storage';
 
 interface FocusTimerProps {
+  isAudioPlaying?: boolean;
+  currentTrackName?: string;
   onTimerComplete?: () => void;
   onTimerStart?: () => void;
   onTimerStop?: () => void;
@@ -22,27 +25,64 @@ const presets: TimerPreset[] = [
   { name: 'Quick Sprint', focus: 15, break: 3, description: 'Short 15/3' },
 ];
 
-const FocusTimer = ({ onTimerComplete, onTimerStart, onTimerStop }: FocusTimerProps) => {
+const FocusTimer = ({ 
+  isAudioPlaying = false,
+  currentTrackName = '',
+  onTimerComplete, 
+  onTimerStart, 
+  onTimerStop 
+}: FocusTimerProps) => {
   const [selectedPreset, setSelectedPreset] = useState<TimerPreset>(presets[0]);
   const [timeLeft, setTimeLeft] = useState(25 * 60);
   const [isRunning, setIsRunning] = useState(false);
   const [isBreak, setIsBreak] = useState(false);
   const [completedSessions, setCompletedSessions] = useState(0);
+  const [sessionStartTime, setSessionStartTime] = useState<number | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Sync timer with audio state
+  useEffect(() => {
+    if (!isAudioPlaying && isRunning) {
+      // Pause timer if music stops
+      setIsRunning(false);
+    }
+  }, [isAudioPlaying, isRunning]);
 
   useEffect(() => {
     if (isRunning) {
+      const startTime = sessionStartTime || Date.now();
+      
       intervalRef.current = setInterval(() => {
         setTimeLeft(prev => {
           if (prev <= 1) {
             // Timer complete
             if (!isBreak) {
               setCompletedSessions(c => c + 1);
+              
+              // Log completed session
+              const duration = Math.floor((Date.now() - startTime) / 1000 / 60);
+              trackSession({
+                trackId: 0,
+                trackName: currentTrackName || 'Focus Session',
+                duration,
+                timestamp: Date.now(),
+                completed: true,
+              });
+              
+              // Stop music and notify parent
               onTimerComplete?.();
+              
+              // Show notification
+              if ('Notification' in window && Notification.permission === 'granted') {
+                new Notification('🎉 Focus Session Complete!', {
+                  body: `Great job! You completed ${selectedPreset.focus} minutes with ${currentTrackName}`,
+                });
+              }
             }
             // Switch to break or focus
             const nextDuration = isBreak ? selectedPreset.focus * 60 : selectedPreset.break * 60;
             setIsBreak(!isBreak);
+            setSessionStartTime(Date.now());
             return nextDuration;
           }
           return prev - 1;
@@ -51,19 +91,27 @@ const FocusTimer = ({ onTimerComplete, onTimerStart, onTimerStop }: FocusTimerPr
     } else {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
+        intervalRef.current = null;
       }
     }
 
     return () => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
+        intervalRef.current = null;
       }
     };
-  }, [isRunning, isBreak, selectedPreset, onTimerComplete]);
+  }, [isRunning]);
 
   const startTimer = () => {
     setIsRunning(true);
+    setSessionStartTime(Date.now());
     onTimerStart?.();
+    
+    // Request notification permission
+    if ('Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission();
+    }
   };
 
   const pauseTimer = () => {
@@ -105,13 +153,25 @@ const FocusTimer = ({ onTimerComplete, onTimerStart, onTimerStop }: FocusTimerPr
     >
       {/* Header */}
       <div className="text-center mb-6">
-        <h3 className="text-xl font-bold mb-1">
-          <span className="bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] bg-clip-text text-transparent">
-            Focus Timer
-          </span>
-        </h3>
+        <div className="flex items-center justify-center gap-2 mb-2">
+          <h3 className="text-xl font-bold">
+            <span className="bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] bg-clip-text text-transparent">
+              Focus Timer
+            </span>
+          </h3>
+          {isAudioPlaying && (
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              className="flex items-center gap-1 px-2 py-1 bg-green-500/20 text-green-400 rounded-full text-xs"
+            >
+              <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+              <span>Synced</span>
+            </motion.div>
+          )}
+        </div>
         <p className="text-xs text-[var(--foreground)]/60">
-          Pomodoro technique
+          {isAudioPlaying && currentTrackName ? `Synced with ${currentTrackName}` : 'Pomodoro technique'}
         </p>
       </div>
 
