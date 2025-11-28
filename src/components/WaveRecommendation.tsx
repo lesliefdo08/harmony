@@ -1,5 +1,6 @@
 import { useState, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { usePathname } from 'next/navigation';
 
 interface WaveRecommendationProps {
   onRecommendation?: (trackId: number) => void;
@@ -15,10 +16,16 @@ interface Recommendation {
 }
 
 const WaveRecommendation = memo(({ onRecommendation }: WaveRecommendationProps) => {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
   const [recommendation, setRecommendation] = useState<Recommendation | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  // Hide on sessions/player page
+  if (pathname === '/sessions' || pathname === '/player') {
+    return null;
+  }
 
   const moods = [
     {
@@ -146,7 +153,7 @@ const WaveRecommendation = memo(({ onRecommendation }: WaveRecommendationProps) 
         category: selectedMood,
       });
       
-      window.location.href = `/player?${params.toString()}`;
+      window.location.href = `/sessions?${params.toString()}`;
     }
   };
 

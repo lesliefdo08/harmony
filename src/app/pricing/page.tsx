@@ -1,8 +1,14 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Check, Sparkles, Zap, Crown, ArrowLeft } from 'lucide-react';
+import { Check, Zap, Crown } from 'lucide-react';
 import Link from 'next/link';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import WaveRecommendation from '@/components/WaveRecommendation';
+import AIAssistant from '@/components/AIAssistant';
+import PWAInstaller from '@/components/PWAInstaller';
+import ScrollToTop from '@/components/ScrollToTop';
 
 export default function PricingPage() {
   const plans = [
@@ -67,21 +73,10 @@ export default function PricingPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a0e1a] via-[#1a1f35] to-[#0a0e1a]">
-      {/* Header */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Link href="/">
-          <motion.button
-            className="flex items-center gap-2 text-[#7aa2f7] hover:text-[#5b9eff] transition-colors"
-            whileHover={{ x: -4 }}
-          >
-            <ArrowLeft size={20} />
-            <span>Back to Home</span>
-          </motion.button>
-        </Link>
-      </div>
+      <Navbar />
 
       {/* Hero Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -89,16 +84,40 @@ export default function PricingPage() {
         >
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
             <span className="bg-gradient-to-r from-[#5b9eff] to-[#7c3aed] bg-clip-text text-transparent">
-              Choose Your Focus Plan
+              Professional Plans
             </span>
           </h1>
           <p className="text-xl text-[#7aa2f7]/80 max-w-2xl mx-auto mb-4">
             Unlock your full potential with science-backed brainwave technology
           </p>
           <p className="text-sm text-[#7aa2f7]/60">
-            Try free for 14 days • No credit card required
+            14-day money-back guarantee • Cancel anytime
           </p>
         </motion.div>
+      </div>
+
+      {/* Sections */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-center p-6 bg-[#1e2642]/30 border border-[#5b9eff]/20 rounded-xl"
+          >
+            <h3 className="text-2xl font-bold text-[#5b9eff] mb-2">For Users</h3>
+            <p className="text-[#a9b1d6]">Individual focus & productivity</p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3 }}
+            className="text-center p-6 bg-[#1e2642]/30 border border-[#7c3aed]/20 rounded-xl"
+          >
+            <h3 className="text-2xl font-bold text-[#7c3aed] mb-2">For Professionals</h3>
+            <p className="text-[#a9b1d6]">Clinical & research applications</p>
+          </motion.div>
+        </div>
       </div>
 
       {/* Pricing Cards */}
@@ -257,6 +276,12 @@ export default function PricingPage() {
           </div>
         </motion.div>
       </div>
+
+      <Footer />
+      <AIAssistant />
+      <PWAInstaller />
+      <WaveRecommendation />
+      <ScrollToTop />
     </div>
   );
 }

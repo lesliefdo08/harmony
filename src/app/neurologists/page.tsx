@@ -1,8 +1,14 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Brain, Users, BarChart3, FileText, Settings, ArrowLeft, Crown } from 'lucide-react';
+import { Brain, Users, BarChart3, FileText, Crown } from 'lucide-react';
 import Link from 'next/link';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import WaveRecommendation from '@/components/WaveRecommendation';
+import AIAssistant from '@/components/AIAssistant';
+import PWAInstaller from '@/components/PWAInstaller';
+import ScrollToTop from '@/components/ScrollToTop';
 
 export default function NeurologistsPage() {
   const features = [
@@ -44,18 +50,7 @@ export default function NeurologistsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a0e1a] via-[#1a1f35] to-[#0a0e1a]">
-      {/* Header */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Link href="/">
-          <motion.button
-            className="flex items-center gap-2 text-[#7aa2f7] hover:text-[#5b9eff] transition-colors"
-            whileHover={{ x: -4 }}
-          >
-            <ArrowLeft size={20} />
-            <span>Back to Home</span>
-          </motion.button>
-        </Link>
-      </div>
+      <Navbar />
 
       {/* Hero Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -274,6 +269,12 @@ export default function NeurologistsPage() {
           </p>
         </motion.div>
       </div>
+
+      <Footer />
+      <AIAssistant />
+      <PWAInstaller />
+      <WaveRecommendation />
+      <ScrollToTop />
     </div>
   );
 }
