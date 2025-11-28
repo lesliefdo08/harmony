@@ -133,14 +133,20 @@ const WaveRecommendation = memo(({ onRecommendation }: WaveRecommendationProps) 
   };
 
   const handleStartSession = () => {
-    if (recommendation && onRecommendation) {
-      onRecommendation(recommendation.trackId);
-      setIsOpen(false);
+    if (recommendation && selectedMood) {
+      // Convert duration to seconds
+      const [minutes] = recommendation.duration.split(':');
+      const durationInSeconds = parseInt(minutes) * 60;
       
-      // Scroll to music player
-      setTimeout(() => {
-        document.getElementById('music-player')?.scrollIntoView({ behavior: 'smooth' });
-      }, 300);
+      // Navigate to player page with recommendation data
+      const params = new URLSearchParams({
+        track: recommendation.title,
+        frequency: recommendation.frequency,
+        duration: durationInSeconds.toString(),
+        category: selectedMood,
+      });
+      
+      window.location.href = `/player?${params.toString()}`;
     }
   };
 

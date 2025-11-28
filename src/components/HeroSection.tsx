@@ -249,26 +249,22 @@ const HeroSection = () => {
           className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
           variants={itemVariants}
         >
-          <motion.button
-            className="px-8 py-4 bg-gradient-to-r from-[#5b9eff] to-[#7c3aed] text-white rounded-lg font-semibold text-base shadow-lg hover:shadow-xl transition-all duration-200 min-w-[180px]"
+          <motion.a
+            href="/player?track=Deep%20Focus%20Alpha&frequency=8-12%20Hz&duration=1500&category=focus"
+            className="px-8 py-4 bg-gradient-to-r from-[#5b9eff] to-[#7c3aed] text-white rounded-lg font-semibold text-base shadow-lg hover:shadow-xl transition-all duration-200 min-w-[180px] text-center"
             whileHover={{ scale: 1.03, y: -2 }}
             whileTap={{ scale: 0.98 }}
-            onClick={() => {
-              document.getElementById('music-player')?.scrollIntoView({ behavior: 'smooth' });
-            }}
           >
-            Get Started
-          </motion.button>
-          <motion.button
-            className="px-8 py-4 border border-[#5b9eff]/50 text-white rounded-lg font-semibold text-base hover:bg-[#5b9eff]/10 transition-all duration-200 min-w-[180px]"
+            Start Session
+          </motion.a>
+          <motion.a
+            href="/pricing"
+            className="px-8 py-4 border border-[#5b9eff]/50 text-white rounded-lg font-semibold text-base hover:bg-[#5b9eff]/10 transition-all duration-200 min-w-[180px] text-center"
             whileHover={{ scale: 1.03, y: -2 }}
             whileTap={{ scale: 0.98 }}
-            onClick={() => {
-              document.getElementById('science')?.scrollIntoView({ behavior: 'smooth' });
-            }}
           >
-            Learn More
-          </motion.button>
+            View Pricing
+          </motion.a>
         </motion.div>
       </motion.div>
     </section>

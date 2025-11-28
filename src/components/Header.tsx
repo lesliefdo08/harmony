@@ -19,10 +19,11 @@ const Header = () => {
   }, []);
 
   const navItems = [
-    { name: 'Home', href: '#home' },
-    { name: 'Music', href: '#music' },
-    { name: 'Science', href: '#science' },
-    { name: 'About', href: '#about' }
+    { name: 'Home', href: '/' },
+    { name: 'Science', href: '/#science' },
+    { name: 'About', href: '/#about' },
+    { name: 'Neurologists', href: '/neurologists' },
+    { name: 'Pricing', href: '/pricing' }
   ];
 
   return (
@@ -88,10 +89,8 @@ const Header = () => {
 
           {/* CTA Button */}
           <div className="hidden md:flex items-center space-x-4">
-            <motion.button
-              onClick={() => {
-                document.getElementById('music-player')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-              }}
+            <motion.a
+              href="/player?track=Deep%20Focus%20Alpha&frequency=8-12%20Hz&duration=1500&category=focus"
               className="px-6 py-2 bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white rounded-full font-medium relative overflow-hidden group"
               whileHover={{ 
                 scale: 1.05,
@@ -122,7 +121,7 @@ const Header = () => {
                   ease: [0.42, 0, 0.58, 1] as const
                 }}
               />
-            </motion.button>
+            </motion.a>
           </div>
 
           {/* Mobile menu button */}
@@ -179,12 +178,10 @@ const Header = () => {
                   {item.name}
                 </motion.a>
               ))}
-              <motion.button
-                onClick={() => {
-                  document.getElementById('music-player')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                  setMobileMenuOpen(false);
-                }}
-                className="w-full px-6 py-3 bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white rounded-full font-medium text-center"
+              <motion.a
+                href="/player?track=Deep%20Focus%20Alpha&frequency=8-12%20Hz&duration=1500&category=focus"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block w-full px-6 py-3 bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-white rounded-full font-medium text-center"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
@@ -192,7 +189,7 @@ const Header = () => {
                 whileTap={{ scale: 0.95 }}
               >
                 Start Session
-              </motion.button>
+              </motion.a>
             </nav>
           </motion.div>
         )}

@@ -13,24 +13,38 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Harmony - Binaural Beats for Focus & Relaxation",
-  description: "Open-source binaural beat generator. Use scientifically-backed audio frequencies to improve focus, reduce stress, and enhance productivity.",
-  keywords: ["binaural beats", "focus music", "productivity", "meditation", "study music", "concentration"],
-  authors: [{ name: "Harmony" }],
+  title: "Harmony - AI-Powered Brainwave Focus & Wellness Platform",
+  description: "Transform your productivity with science-backed binaural beats. AI-powered recommendations, smart analytics, and personalized focus sessions for students and professionals.",
+  keywords: [
+    "binaural beats", 
+    "focus music", 
+    "productivity app", 
+    "meditation", 
+    "study music", 
+    "concentration", 
+    "brainwave entrainment",
+    "AI wellness",
+    "focus timer",
+    "pomodoro technique",
+    "mental wellness",
+    "stress relief"
+  ],
+  authors: [{ name: "Harmony Team" }],
   creator: "Harmony",
+  applicationName: "Harmony",
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://harmony.app",
-    title: "Harmony - Binaural Beats Generator",
-    description: "Free, open-source binaural beat generator for better focus and relaxation.",
+    title: "Harmony - AI Brainwave Focus Platform",
+    description: "Unlock peak performance with AI-powered binaural beats. Smart session tracking, personalized recommendations, and science-backed audio for focus and wellness.",
     siteName: "Harmony",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Harmony - Binaural Beats Generator",
-    description: "Free binaural beat generator for focus and relaxation.",
-    creator: "@harmony",
+    title: "Harmony - AI Brainwave Focus Platform",
+    description: "AI-powered binaural beats for focus, productivity, and mental wellness.",
+    creator: "@harmonyapp",
   },
   robots: {
     index: true,
@@ -43,6 +57,7 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  category: "Productivity",
 };
 
 export const viewport = {
