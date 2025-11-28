@@ -93,6 +93,13 @@ export default function PricingPage() {
           <p className="text-sm text-[#7aa2f7]/60">
             14-day money-back guarantee • Cancel anytime
           </p>
+          <div className="mt-4">
+            <Link href="/login">
+              <motion.button className="px-4 py-2 rounded-md bg-[#2a3254] text-[#7aa2f7] hover:bg-[#3a4264]">
+                Login
+              </motion.button>
+            </Link>
+          </div>
         </motion.div>
       </div>
 
